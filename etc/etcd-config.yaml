@@ -1,0 +1,35 @@
+replicaCount: 3
+persistence: 
+  size: 4Gi
+service:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: %s
+  type: LoadBalancer
+auth:
+  rbac:
+    rootPassword: %s
+  peer:
+    secureTransport: true
+    useAutoTLS: false
+    existingSecret: etcd-peer-tls
+    certFilename: tls.crt
+    certKeyFilename: tls.key
+    enableAuthentication: false
+  client:
+    secureTransport: true
+    useAutoTLS: false
+    existingSecret: etcd-client-tls
+    certFilename: tls.crt
+    certKeyFilename: tls.key
+    enableAuthentication: false
+extraVolumes:
+  - name: ca-volume
+    secret: 
+      secretName: etcd-peer-tls
+      items:
+        - key: ca.crt
+          path: corp-ca.pem
+extraVolumeMounts:
+  - name: ca-volume
+    mountPath: /etc/ssl/certs/corp-ca.pem
+    subPath: corp-ca.pem
