@@ -1,6 +1,10 @@
 variable "namespace"                  { type = string }
 variable "etcd_fqdn"                  { type = string }
-variable "rootpwd"                    { type = string }
+
+variable "rootpwd" {
+  type.     = string
+  sensitive = true
+}
 
 variable "k8s_host" {
   type      = string
