@@ -2,7 +2,7 @@ variable "namespace"                  { type = string }
 variable "etcd_fqdn"                  { type = string }
 
 variable "rootpwd" {
-  type.     = string
+  type      = string
   sensitive = true
 }
 
